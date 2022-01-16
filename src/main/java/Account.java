@@ -18,6 +18,9 @@ public class Account {
         this.branch = branch;
     }
 
+    public Account(int amount, int id, String branch) {
+    }
+
     public String getFirstName() {
         return firstName;
     }
