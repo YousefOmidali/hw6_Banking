@@ -21,11 +21,11 @@ public class AccountRepository {
     }
 
     public void insert(Account account) throws SQLException {
-        String insert = "insert into account (first_name, last_name, national_code,amount, branch) values (?,?,?,?,?);";
+        String insert = "insert into account (first_name, last_name , national_code ,amount, branch) values (?,?,?,?,?);";
         PreparedStatement preparedStatement = connection.prepareStatement(insert);
-        preparedStatement.setString(1, account.getFirstName());
-        preparedStatement.setString(2, account.getLastName());
-        preparedStatement.setInt(3, account.getNationalCode());
+        preparedStatement.setString(1, account.getCustomer().getFirstName());
+        preparedStatement.setString(2, account.getCustomer().getLastName());
+        preparedStatement.setInt(3, account.getCustomer().getNationalCode());
         preparedStatement.setInt(4, account.getAmount());
         preparedStatement.setString(5, account.getBranch());
         preparedStatement.execute();
@@ -36,9 +36,9 @@ public class AccountRepository {
         String update = "update Account set first_name = ?,last_name = ?, national_code = ?, amount = ?, branch = ? " +
                 "where Id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(update);
-        preparedStatement.setString(1, account.getFirstName());
-        preparedStatement.setString(2, account.getLastName());
-        preparedStatement.setInt(3, account.getNationalCode());
+        preparedStatement.setString(1, account.getCustomer().getFirstName());
+        preparedStatement.setString(2, account.getCustomer().getLastName());
+        preparedStatement.setInt(3, account.getCustomer().getNationalCode());
         preparedStatement.setInt(4, account.getAmount());
         preparedStatement.setString(5, account.getBranch());
         preparedStatement.execute();

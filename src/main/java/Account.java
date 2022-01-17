@@ -1,7 +1,5 @@
 public class Account {
-    String firstName;
-    String lastName;
-    Integer NationalCode;
+    Customer customer;
     Integer amount;
     Integer id;
     String branch;
@@ -9,40 +7,12 @@ public class Account {
     public Account() {
     }
 
-    public Account(String firstName, String lastName, Integer nationalCode, Integer amount, Integer id, String branch) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        NationalCode = nationalCode;
-        this.amount = amount;
-        this.id = id;
-        this.branch = branch;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public Account(int amount, int id, String branch) {
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Integer getNationalCode() {
-        return NationalCode;
-    }
-
-    public void setNationalCode(Integer nationalCode) {
-        NationalCode = nationalCode;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Integer getAmount() {
@@ -69,12 +39,20 @@ public class Account {
         this.branch = branch;
     }
 
+    public Account(Customer customer, Integer amount, Integer id, String branch) {
+        this.customer = customer;
+        this.amount = amount;
+        this.id = id;
+        this.branch = branch;
+    }
+
+    public Account(int amount, int id, String branch) {
+    }
+
     @Override
     public String toString() {
         return "Account{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", NationalCode=" + NationalCode +
+                "customer=" + customer +
                 ", amount=" + amount +
                 ", id=" + id +
                 ", branch='" + branch + '\'' +
