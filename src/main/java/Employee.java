@@ -1,9 +1,9 @@
 public class Employee {
-    String firstName;
-    String lastName;
-    Integer NationalCode;
-    Branch branch;
-    Bosses boss;
+   private String firstName;
+   private String lastName;
+   private Integer NationalCode;
+   private Branch branch;
+   private Bosses boss;
 
     public Employee() {
     }

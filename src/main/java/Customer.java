@@ -1,7 +1,7 @@
 public class Customer {
-    String firstName;
-    String lastName;
-    Integer NationalCode;
+   private String firstName;
+   private String lastName;
+   private Integer NationalCode;
 
     public Customer(String firstName, String lastName, Integer nationalCode) {
         this.firstName = firstName;

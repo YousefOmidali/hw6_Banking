@@ -1,14 +1,24 @@
 public class Account {
-    Customer customer;
-    Integer amount;
-    Integer id;
-    Branch branch;
-    AccountStatus accountStatus ;
+    private Customer customer;
+    private Integer amount;
+    private Integer id;
+    private Branch branch;
+    private AccountStatus accountStatus;
+    private Card card;
 
     public Account() {
     }
 
     public Account(int amount, int id, String branch) {
+    }
+
+    public Account(Customer customer, Integer amount, Integer id, Branch branch, AccountStatus accountStatus, Card card) {
+        this.customer = customer;
+        this.amount = amount;
+        this.id = id;
+        this.branch = branch;
+        this.accountStatus = accountStatus;
+        this.card = card;
     }
 
     public Customer getCustomer() {
@@ -51,12 +61,12 @@ public class Account {
         this.accountStatus = accountStatus;
     }
 
-    public Account(Customer customer, Integer amount, Integer id, Branch branch, AccountStatus accountStatus) {
-        this.customer = customer;
-        this.amount = amount;
-        this.id = id;
-        this.branch = branch;
-        this.accountStatus = accountStatus;
+    public Card getCard() {
+        return card;
+    }
+
+    public void setCard(Card card) {
+        this.card = card;
     }
 
     @Override
@@ -67,6 +77,7 @@ public class Account {
                 ", id=" + id +
                 ", branch=" + branch +
                 ", accountStatus=" + accountStatus +
+                ", card=" + card +
                 '}';
     }
 }
