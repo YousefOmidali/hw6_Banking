@@ -2,9 +2,13 @@ public class Account {
     Customer customer;
     Integer amount;
     Integer id;
-    String branch;
+    Branch branch;
+    AccountStatus accountStatus ;
 
     public Account() {
+    }
+
+    public Account(int amount, int id, String branch) {
     }
 
     public Customer getCustomer() {
@@ -31,22 +35,28 @@ public class Account {
         this.id = id;
     }
 
-    public String getBranch() {
+    public Branch getBranch() {
         return branch;
     }
 
-    public void setBranch(String branch) {
+    public void setBranch(Branch branch) {
         this.branch = branch;
     }
 
-    public Account(Customer customer, Integer amount, Integer id, String branch) {
+    public AccountStatus getAccountStatus() {
+        return accountStatus;
+    }
+
+    public void setAccountStatus(AccountStatus accountStatus) {
+        this.accountStatus = accountStatus;
+    }
+
+    public Account(Customer customer, Integer amount, Integer id, Branch branch, AccountStatus accountStatus) {
         this.customer = customer;
         this.amount = amount;
         this.id = id;
         this.branch = branch;
-    }
-
-    public Account(int amount, int id, String branch) {
+        this.accountStatus = accountStatus;
     }
 
     @Override
@@ -55,7 +65,8 @@ public class Account {
                 "customer=" + customer +
                 ", amount=" + amount +
                 ", id=" + id +
-                ", branch='" + branch + '\'' +
+                ", branch=" + branch +
+                ", accountStatus=" + accountStatus +
                 '}';
     }
 }

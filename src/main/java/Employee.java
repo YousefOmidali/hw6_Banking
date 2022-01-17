@@ -2,16 +2,16 @@ public class Employee {
     String firstName;
     String lastName;
     Integer NationalCode;
-    String branch;
-    String boss;
+    Branch branch;
+    Bosses boss;
 
     public Employee() {
     }
 
-    public Employee(String firstName, String lastName, Integer nationalCode, String branch, String boss) {
+    public Employee(String firstName, String lastName, Integer nationalCode, Branch branch, Bosses boss) {
         this.firstName = firstName;
         this.lastName = lastName;
-        NationalCode = nationalCode;
+        this.NationalCode = nationalCode;
         this.branch = branch;
         this.boss = boss;
     }
@@ -43,19 +43,19 @@ public class Employee {
         NationalCode = nationalCode;
     }
 
-    public String getBranch() {
+    public Branch getBranch() {
         return branch;
     }
 
-    public void setBranch(String branch) {
+    public void setBranch(Branch branch) {
         this.branch = branch;
     }
 
-    public String getBoss() {
+    public Bosses getBoss() {
         return boss;
     }
 
-    public void setBoss(String boss) {
+    public void setBoss(Bosses boss) {
         this.boss = boss;
     }
 

@@ -25,8 +25,8 @@ public class EmployeeRepository {
         preparedStatement.setString(1, employee.getFirstName());
         preparedStatement.setString(2, employee.getLastName());
         preparedStatement.setInt(3, employee.getNationalCode());
-        preparedStatement.setString(4, employee.getBranch());
-        preparedStatement.setString(5, employee.getBoss());
+        preparedStatement.setString(4, String.valueOf(employee.getBranch()));
+        preparedStatement.setString(5, String.valueOf(employee.getBoss()));
         preparedStatement.execute();
         preparedStatement.close();
 
@@ -46,9 +46,9 @@ public class EmployeeRepository {
         PreparedStatement preparedStatement = connection.prepareStatement(update);
         preparedStatement.setString(1, employee.getFirstName());
         preparedStatement.setString(2, employee.getLastName());
-        preparedStatement.setString(3, employee.getBoss());
-        preparedStatement.setString(4, employee.getBranch());
-        preparedStatement.setInt(4, employee.getNationalCode());
+        preparedStatement.setString(3, String.valueOf(employee.getBoss()));
+        preparedStatement.setString(4, String.valueOf(employee.getBranch()));
+        preparedStatement.setInt(5, nationalCode);
         preparedStatement.execute();
         preparedStatement.close();
 
