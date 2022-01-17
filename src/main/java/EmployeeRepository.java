@@ -6,8 +6,8 @@ import java.sql.SQLException;
 public class EmployeeRepository {
     private Connection connection = MyConnection.connection;
 
-    public EmployeeRepository() throws SQLException{
-        String createTable="create table if not exists Account (\n" +
+    public EmployeeRepository() throws SQLException {
+        String createTable = "create table if not exists Account (\n" +
                 "first_name varchar (200), " +
                 "last_name varchar (200), " +
                 "national_code int primary key , " +
@@ -24,7 +24,7 @@ public class EmployeeRepository {
         PreparedStatement preparedStatement = connection.prepareStatement(insert);
         preparedStatement.setString(1, employee.getFirstName());
         preparedStatement.setString(2, employee.getLastName());
-        preparedStatement.setInt(3,employee.getNationalCode());
+        preparedStatement.setInt(3, employee.getNationalCode());
         preparedStatement.setString(4, employee.getBranch());
         preparedStatement.setString(5, employee.getBoss());
         preparedStatement.execute();
@@ -40,6 +40,20 @@ public class EmployeeRepository {
         preparedStatement.close();
 
     }
+
+    public void update(Integer nationalCode, Employee employee) throws SQLException {
+        String update = "update employee set first_name = ?,last_name = ?, boss = ? , branch = ? where national_code = ?;";
+        PreparedStatement preparedStatement = connection.prepareStatement(update);
+        preparedStatement.setString(1, employee.getFirstName());
+        preparedStatement.setString(2, employee.getLastName());
+        preparedStatement.setString(3, employee.getBoss());
+        preparedStatement.setString(4, employee.getBranch());
+        preparedStatement.setInt(4, employee.getNationalCode());
+        preparedStatement.execute();
+        preparedStatement.close();
+
+    }
+
     public Employee findByNationalCode(Integer nationalCode) throws SQLException {
         String findByNationalCode = "SELECT * FROM employee " +
                 "WHERE national_code = ?";
@@ -49,9 +63,10 @@ public class EmployeeRepository {
         Employee employee = null;
         if (resultSet.next()) {
             employee = new Employee(resultSet.getString("first_name"),
-                                resultSet.getString("last_name"),resultSet.getString("branch"),
-                                         resultSet.getString("boss"));
+                    resultSet.getString("last_name"), resultSet.getString("branch"),
+                    resultSet.getString("boss"));
         }
         return employee;
     }
+
 }
