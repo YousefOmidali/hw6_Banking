@@ -17,6 +17,12 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
+    public Card(Integer cvv2, String password, Long cardNumber) {
+        this.cvv2 = cvv2;
+        this.password = password;
+        this.cardNumber = cardNumber;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.time.LocalDate;
 
 public class TransactionRepository {
     private Connection connection = MyConnection.connection;
@@ -6,10 +7,10 @@ public class TransactionRepository {
     public TransactionRepository() throws SQLException {
         String createTable = "create table if not exists transaction (" +
                 "id serial primary key," +
-                "account_id Integer ," +
+                "card_id Integer ," +
                 "amount int," +
                 "date date," +
-                "CONSTRAINT fk_transaction_id FOREIGN KEY (account_id) REFERENCES Account (Id))";
+                "CONSTRAINT fk_transaction_id FOREIGN KEY (card_id) REFERENCES card (Id))";
         PreparedStatement preparedStatement = connection.prepareStatement(createTable);
         preparedStatement.execute();
         preparedStatement.close();
@@ -59,4 +60,5 @@ public class TransactionRepository {
         }
         return transactionList;
     }
+
 }

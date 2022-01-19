@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,7 +8,7 @@ public class CardRepository {
     private Connection connection = MyConnection.connection;
 
     public CardRepository() throws SQLException {
-        String createTable = "create table if not exists employee (\n" +
+        String createTable = "create table if not exists card (\n" +
                 "id integer," +
                 "card_number bigint, " +
                 "cvv2 integer, " +
@@ -53,13 +54,35 @@ public class CardRepository {
         PreparedStatement preparedStatement = connection.prepareStatement(exists);
         preparedStatement.setLong(1, cardNumber);
         ResultSet resultSet = preparedStatement.executeQuery();
+        preparedStatement.close();
         if (resultSet.next())
             status = true;
         return status;
-
     }
 
-    public Boolean checkCardNumberDigits(Long cardNumber) throws SQLException {
+    public Integer getAmount(Long cardNumber) throws SQLException {
+        String getAmount = "select amount from Account inner join card c on Account.Id = c.id where card_number = ? ;";
+        PreparedStatement preparedStatement = connection.prepareStatement(getAmount);
+        preparedStatement.setLong(1, cardNumber);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        preparedStatement.close();
+        Integer amount = 0;
+        if (resultSet.next()) {
+            amount = Integer.valueOf(resultSet.getString("amount"));
+        }
+        return amount;
+    }
+
+    public void setAmount(Card card, Integer amount) throws SQLException {
+        String setAmount = "update Account set amount = ? where Id = ? ;";
+        PreparedStatement preparedStatement = connection.prepareStatement(setAmount);
+        preparedStatement.setInt(1, amount);
+        preparedStatement.setInt(2, card.getId());
+        preparedStatement.execute();
+        preparedStatement.close();
+    }
+
+    public Boolean checkDigitsOfCardNumber(Long cardNumber) throws SQLException {
         Boolean status = false;
         int digit = 0;
         if (cardNumber > 0) {
@@ -69,5 +92,19 @@ public class CardRepository {
                 status = true;
         }
         return status;
+    }
+
+    public Account getAccount(Integer card_id) throws SQLException {
+        String getAccount = "select * from Account inner join card c on Account.Id = c.id where c.id = ? ;";
+        PreparedStatement preparedStatement = connection.prepareStatement(getAccount);
+        preparedStatement.setInt(1, card_id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        Account account = new Account();
+        if (resultSet.next()) {
+            account = new Account(resultSet.getInt("amount"), resultSet.getInt("Id"),
+                    resultSet.getString(account.getAccountStatus().name()));
+        }
+        return account;
+
     }
 }

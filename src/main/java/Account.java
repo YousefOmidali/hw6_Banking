@@ -12,6 +12,22 @@ public class Account {
     public Account(int amount, int id, String branch) {
     }
 
+    public Account(Customer customer, Integer amount,  Branch branch, AccountStatus accountStatus, Card card) {
+        this.customer = customer;
+        this.amount = amount;
+        this.branch = branch;
+        this.accountStatus = accountStatus;
+        this.card = card;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public Account(Customer customer, Integer amount, Integer id, Branch branch, AccountStatus accountStatus, Card card) {
         this.customer = customer;
         this.amount = amount;
@@ -19,6 +35,13 @@ public class Account {
         this.branch = branch;
         this.accountStatus = accountStatus;
         this.card = card;
+    }
+
+    public Account(Integer amount, Integer id, Branch branch, AccountStatus accountStatus) {
+        this.amount = amount;
+        this.id = id;
+        this.branch = branch;
+        this.accountStatus = accountStatus;
     }
 
     public Customer getCustomer() {
@@ -37,13 +60,6 @@ public class Account {
         this.amount = amount;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Branch getBranch() {
         return branch;
@@ -74,7 +90,6 @@ public class Account {
         return "Account{" +
                 "customer=" + customer +
                 ", amount=" + amount +
-                ", id=" + id +
                 ", branch=" + branch +
                 ", accountStatus=" + accountStatus +
                 ", card=" + card +

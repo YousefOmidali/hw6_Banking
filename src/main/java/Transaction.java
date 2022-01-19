@@ -1,4 +1,5 @@
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class Transaction {
     private Integer id;
@@ -8,6 +9,12 @@ public class Transaction {
 
 
     public Transaction() {
+    }
+
+    public Transaction(Account account, Integer amount, Date date) {
+        this.account = account;
+        this.amount = amount;
+        this.date = date;
     }
 
     public Transaction(Integer id, Account account, Integer amount, Date date) {
@@ -22,6 +29,9 @@ public class Transaction {
     }
 
     public Transaction(int amount, Date date, int account_id) {
+    }
+
+    public Transaction(Account account, Integer amount, LocalDate date) {
     }
 
     public Integer getId() {
