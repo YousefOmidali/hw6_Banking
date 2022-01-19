@@ -107,4 +107,27 @@ public class CardRepository {
         return account;
 
     }
+
+    public void changePassword(Card card, String password) throws SQLException {
+        String changePassword = "update card set password = ? where card_number = ? ;\n";
+        PreparedStatement preparedStatement = connection.prepareStatement(changePassword);
+        preparedStatement.setString(1, password);
+        preparedStatement.setLong(2, card.getCardNumber());
+        preparedStatement.execute();
+        preparedStatement.close();
+
+    }
+    public Boolean checkPassword (Card card)throws SQLException {
+        Boolean passwordStatus = false;
+        String checkPassword = "select * from card where card_number = ? and password = ? ;";
+        PreparedStatement preparedStatement = connection.prepareStatement(checkPassword);
+        preparedStatement.setLong(1,card.getCardNumber());
+        preparedStatement.setString(2, card.getPassword());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        preparedStatement.close();
+        if (resultSet.next()){
+            passwordStatus = true;
+        }
+        return passwordStatus;
+    }
 }

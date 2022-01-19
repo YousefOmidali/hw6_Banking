@@ -83,26 +83,29 @@ public class AccountRepository {
         return amount;
 
     }
-    public Boolean checkAccountStatus (Long cardNumber) throws SQLException {
-        Boolean status = false ;
+
+    public Boolean checkAccountStatus(Long cardNumber) throws SQLException {
+        Boolean status = false;
         String check = "select *  from Account inner join card c on Account.Id = c.id where card_number = ?;";
         PreparedStatement preparedStatement = connection.prepareStatement(check);
-        preparedStatement.setLong(1,cardNumber);
+        preparedStatement.setLong(1, cardNumber);
         ResultSet resultSet = preparedStatement.executeQuery();
         preparedStatement.close();
         String statusString;
-        if (resultSet.next()){
-            statusString=resultSet.getString("status");
-            if (statusString.toUpperCase().equals(AccountStatus.ALLOW)){
+        if (resultSet.next()) {
+            statusString = resultSet.getString("status");
+            if (statusString.toUpperCase().equals(AccountStatus.ALLOW)) {
                 status = true;
             }
         }
         return status;
     }
-    public void blockAccount (Long cardNumber) throws  SQLException {
+
+    public void blockAccount(Card card) throws SQLException {
         String blockAccount = "update Account set status = ? where Id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(blockAccount);
         preparedStatement.setString(1, String.valueOf(AccountStatus.BLOCKED));
+        preparedStatement.setInt(2, card.getId());
         preparedStatement.execute();
         preparedStatement.close();
     }
