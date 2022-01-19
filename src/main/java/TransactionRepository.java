@@ -7,7 +7,7 @@ public class TransactionRepository {
     public TransactionRepository() throws SQLException {
         String createTable = "create table if not exists transaction (" +
                 "id serial primary key," +
-                "card_id Integer ," +
+                "card_id Integer  ," +
                 "amount int," +
                 "date date," +
                 "CONSTRAINT fk_transaction_id FOREIGN KEY (card_id) REFERENCES card (Id))";

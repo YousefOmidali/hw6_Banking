@@ -23,6 +23,10 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
+    public Card(Account byNationalCode) {
+
+    }
+
     public Integer getId() {
         return id;
     }

@@ -10,8 +10,8 @@ public class AccountRepository {
                 "national_code int ,\n" +
                 "amount int ,\n" +
                 "Id serial primary key ,\n" +
-                "branch account_branch,\n" +
-                "status account_status\n" +
+                "branch varchar (250),\n" +
+                "status varchar (250)" +
                 ");";
         PreparedStatement preparedStatement = connection.prepareStatement(createTable);
         preparedStatement.execute();
@@ -26,7 +26,7 @@ public class AccountRepository {
         preparedStatement.setString(2, account.getCustomer().getLastName());
         preparedStatement.setInt(3, account.getCustomer().getNationalCode());
         preparedStatement.setInt(4, account.getAmount());
-        preparedStatement.setString(5, null);
+        preparedStatement.setString(5, String.valueOf(null));
         preparedStatement.setString(6, String.valueOf(AccountStatus.ALLOW));
         preparedStatement.execute();
         preparedStatement.close();
@@ -101,11 +101,11 @@ public class AccountRepository {
         return status;
     }
 
-    public void blockAccount(Card card) throws SQLException {
+    public void blockAccount(Account account) throws SQLException {
         String blockAccount = "update Account set status = ? where Id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(blockAccount);
         preparedStatement.setString(1, String.valueOf(AccountStatus.BLOCKED));
-        preparedStatement.setInt(2, card.getId());
+        preparedStatement.setInt(2,account.getId());
         preparedStatement.execute();
         preparedStatement.close();
     }

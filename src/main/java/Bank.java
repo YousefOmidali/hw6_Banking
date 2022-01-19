@@ -31,10 +31,11 @@ public class Bank {
 
         System.out.println("What do you want to do : \n1.Make an account \n2.Money transfer \n3.change password ");
         Integer order = scanner.nextInt();
+        scanner.nextLine();
         if (order == 1) {
             System.out.println("enter your first name: ");
             firstName = scanner.nextLine();
-            System.out.println("enter your first name: ");
+            System.out.println("enter your last name: ");
             lastName = scanner.nextLine();
             System.out.println("enter your national code: ");
             nationalCode = scanner.nextInt();
@@ -64,15 +65,27 @@ public class Bank {
 
         }
         if (order == 3) {
+            int numberOfWrongPasswordEntered = 0;
             System.out.println("enter your card number : ");
             firstCardNumber = scanner.nextLong();
-            System.out.println("enter your current password");
-            password = scanner.nextLine();
-            Card card = new Card(null, password, firstCardNumber);
-            if (cardRepository.checkPassword(card)) {
-                System.out.println("Enter your new password: ");
-                String newPassword = scanner.nextLine();
-                cardRepository.changePassword(card, newPassword);
+            System.out.println("enter your national code: ");
+            Integer nationalCodeChangePassword = scanner.nextInt();
+            while (numberOfWrongPasswordEntered < 4) {
+                System.out.println("enter your current password");
+                password = scanner.nextLine();
+
+                Card card = new Card(null, password, firstCardNumber);
+                if (cardRepository.checkPassword(card)) {
+                    System.out.println("Enter your new password: ");
+                    String newPassword = scanner.nextLine();
+                    cardRepository.changePassword(card, newPassword);
+                } else {
+                    System.out.println("wrong password! ");
+                    numberOfWrongPasswordEntered++;
+                }
+                if (numberOfWrongPasswordEntered == 3) {   //Block account after 3 wrong password
+                    services.blockAccountByNationalCode(nationalCodeChangePassword);
+                }
             }
         }
 

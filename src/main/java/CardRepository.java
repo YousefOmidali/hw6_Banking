@@ -8,8 +8,8 @@ public class CardRepository {
     private Connection connection = MyConnection.connection;
 
     public CardRepository() throws SQLException {
-        String createTable = "create table if not exists card (\n" +
-                "id integer," +
+        String createTable = "create table if not exists card (" +
+                "id integer unique ," +
                 "card_number bigint, " +
                 "cvv2 integer, " +
                 "password integer, " +

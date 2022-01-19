@@ -11,8 +11,8 @@ public class EmployeeRepository {
                 "first_name varchar (200), " +
                 "last_name varchar (200), " +
                 "national_code int primary key , " +
-                "branch account_branch, " +
-                "boss employee_bosses " +
+                "branch varchar (250), " +
+                "boss varchar (250)" +
                 ");";
         PreparedStatement preparedStatement = connection.prepareStatement(createTable);
         preparedStatement.execute();

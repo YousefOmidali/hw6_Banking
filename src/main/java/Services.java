@@ -42,4 +42,8 @@ public class Services {
             } else System.out.println("Your Account is Blocked! ");
         } else System.out.println("Wrong card number (digit) ");
     }
+
+    public void blockAccountByNationalCode(Integer nationalCode) throws SQLException {
+        accountRepository.blockAccount(accountRepository.findByNationalCode(nationalCode));
+    }
 }
