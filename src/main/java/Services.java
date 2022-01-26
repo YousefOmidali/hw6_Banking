@@ -12,7 +12,7 @@ public class Services {
 
     public void createAccount(String firstName, String lastName, Integer nationalCode,
                               Integer amount, Branch branch, AccountStatus accountStatus,
-                              Integer cvv2, String password, Long cardNumber) throws SQLException {
+                              Integer cvv2, Integer password, Long cardNumber) throws SQLException {
 
         Customer customer = new Customer(firstName, lastName, nationalCode);
         Card card = new Card(cvv2, password, cardNumber);

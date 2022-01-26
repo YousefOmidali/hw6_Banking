@@ -9,10 +9,10 @@ public class CardRepository {
 
     public CardRepository() throws SQLException {
         String createTable = "create table if not exists card (" +
-                "id integer unique ," +
+                "id serial ," +
                 "card_number bigint, " +
                 "cvv2 integer, " +
-                "password integer, " +
+                "password INTEGER , " +
                 "CONSTRAINT fk_Card_id FOREIGN KEY (id) REFERENCES Account (Id));";
         PreparedStatement preparedStatement = connection.prepareStatement(createTable);
         preparedStatement.execute();
@@ -24,7 +24,7 @@ public class CardRepository {
         PreparedStatement preparedStatement = connection.prepareStatement(insert);
         preparedStatement.setLong(1, card.getCardNumber());
         preparedStatement.setInt(2, card.getCvv2());
-        preparedStatement.setString(3, card.getPassword());
+        preparedStatement.setInt(3, card.getPassword());
         preparedStatement.execute();
         preparedStatement.close();
     }
@@ -34,7 +34,7 @@ public class CardRepository {
         PreparedStatement preparedStatement = connection.prepareStatement(update);
         preparedStatement.setLong(1, card.getCardNumber());
         preparedStatement.setInt(2, card.getCvv2());
-        preparedStatement.setString(3, card.getPassword());
+        preparedStatement.setInt(3, card.getPassword());
         preparedStatement.setLong(4, cardNumber);
         preparedStatement.execute();
         preparedStatement.close();
@@ -61,7 +61,7 @@ public class CardRepository {
     }
 
     public Integer getAmount(Long cardNumber) throws SQLException {
-        String getAmount = "select amount from Account inner join card c on Account.Id = c.id where card_number = ? ;";
+        String getAmount = "select amount from Account inner join card c on Account.Id = c.account_id where card_number = ? ;";
         PreparedStatement preparedStatement = connection.prepareStatement(getAmount);
         preparedStatement.setLong(1, cardNumber);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -94,10 +94,10 @@ public class CardRepository {
         return status;
     }
 
-    public Account getAccount(Integer card_id) throws SQLException {
-        String getAccount = "select * from Account inner join card c on Account.Id = c.id where c.id = ? ;";
+    public Account getAccount(Integer cardNumber) throws SQLException {
+        String getAccount = "select * from Account inner join card c on Account.Id = c.id where c.card_number = ? ;";
         PreparedStatement preparedStatement = connection.prepareStatement(getAccount);
-        preparedStatement.setInt(1, card_id);
+        preparedStatement.setInt(1, cardNumber);
         ResultSet resultSet = preparedStatement.executeQuery();
         Account account = new Account();
         if (resultSet.next()) {
@@ -122,7 +122,7 @@ public class CardRepository {
         String checkPassword = "select * from card where card_number = ? and password = ? ;";
         PreparedStatement preparedStatement = connection.prepareStatement(checkPassword);
         preparedStatement.setLong(1,card.getCardNumber());
-        preparedStatement.setString(2, card.getPassword());
+        preparedStatement.setInt(2, card.getPassword());
         ResultSet resultSet = preparedStatement.executeQuery();
         preparedStatement.close();
         if (resultSet.next()){

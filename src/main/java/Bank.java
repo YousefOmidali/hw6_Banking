@@ -19,10 +19,10 @@ public class Bank {
         Integer nationalCode;
         Integer amount;
         int cvv2 = 1000 + random.nextInt(9999);
-        String password;
-        String firstCardPassword;
+        Integer password;
+        Integer firstCardPassword;
         String secondCardPassword;
-        Long cardNumber = (random.nextLong() % 1000000000000000L);
+        Long cardNumber = (random.nextLong() % 10000000000000000L)+(9999999999999999L);
         Long firstCardNumber;
         Long secondCardNumber;
         int firstCardCvv2;
@@ -42,16 +42,17 @@ public class Bank {
             System.out.println("how much money you want to put in account ? ");
             amount = scanner.nextInt();
             System.out.println("enter your password: ");
-            password = scanner.nextLine();
+            password = scanner.nextInt();
             services.createAccount(firstName, lastName, nationalCode, amount, null, AccountStatus.ALLOW,
                     cvv2, password, cardNumber);
             System.out.println("Account and Card is made ");
+            System.out.println("Your cvv2 is:"+cvv2+"  and your cardNumber is: "+ cardNumber+"\n please take a note of them! ");
         }
         if (order == 2) {
             System.out.println("enter your card number : ");
             firstCardNumber = scanner.nextLong();
             System.out.println("enter your password: ");
-            firstCardPassword = scanner.nextLine();
+            firstCardPassword = scanner.nextInt();
             System.out.println("enter your cvv2: ");
             firstCardCvv2 = scanner.nextInt();
             Card firstCard = new Card(firstCardCvv2, firstCardPassword, firstCardNumber);
@@ -72,7 +73,7 @@ public class Bank {
             Integer nationalCodeChangePassword = scanner.nextInt();
             while (numberOfWrongPasswordEntered < 4) {
                 System.out.println("enter your current password");
-                password = scanner.nextLine();
+                password = scanner.nextInt();
 
                 Card card = new Card(null, password, firstCardNumber);
                 if (cardRepository.checkPassword(card)) {

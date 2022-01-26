@@ -3,28 +3,24 @@ import java.math.BigInteger;
 public class Card {
     Integer id;
     Integer cvv2;
-    String password;
+    Integer password;
     Long cardNumber;
 
 
     public Card() {
     }
 
-    public Card(Integer id, Integer cvv2, String password, Long cardNumber) {
+    public Card(Integer id, Integer cvv2, Integer password, Long cardNumber) {
         this.id = id;
         this.cvv2 = cvv2;
         this.password = password;
         this.cardNumber = cardNumber;
     }
 
-    public Card(Integer cvv2, String password, Long cardNumber) {
+    public Card(Integer cvv2, Integer password, Long cardNumber) {
         this.cvv2 = cvv2;
         this.password = password;
         this.cardNumber = cardNumber;
-    }
-
-    public Card(Account byNationalCode) {
-
     }
 
     public Integer getId() {
@@ -43,11 +39,11 @@ public class Card {
         this.cvv2 = cvv2;
     }
 
-    public String getPassword() {
+    public Integer getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(Integer password) {
         this.password = password;
     }
 
@@ -59,13 +55,4 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
-    @Override
-    public String toString() {
-        return "Card{" +
-                "id=" + id +
-                ", cvv2=" + cvv2 +
-                ", password='" + password + '\'' +
-                ", cardNumber=" + cardNumber +
-                '}';
-    }
 }

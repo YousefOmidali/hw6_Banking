@@ -20,14 +20,13 @@ public class AccountRepository {
     }
 
     public void insert(Account account) throws SQLException {
-        String insert = "insert into account (first_name, last_name, national_code,amount, branch, status) values (?,?,?,?,?,?);";
+        String insert = "insert into account (first_name, last_name, national_code,amount, status) values (?,?,?,?,?);";
         PreparedStatement preparedStatement = connection.prepareStatement(insert);
         preparedStatement.setString(1, account.getCustomer().getFirstName());
         preparedStatement.setString(2, account.getCustomer().getLastName());
         preparedStatement.setInt(3, account.getCustomer().getNationalCode());
         preparedStatement.setInt(4, account.getAmount());
-        preparedStatement.setString(5, String.valueOf(null));
-        preparedStatement.setString(6, String.valueOf(AccountStatus.ALLOW));
+        preparedStatement.setString(5, String.valueOf(AccountStatus.ALLOW));
         preparedStatement.execute();
         preparedStatement.close();
     }
