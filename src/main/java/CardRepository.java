@@ -8,12 +8,14 @@ public class CardRepository {
     private Connection connection = MyConnection.connection;
 
     public CardRepository() throws SQLException {
-        String createTable = "create table if not exists card (" +
-                "id serial ," +
-                "card_number bigint, " +
-                "cvv2 integer, " +
-                "password INTEGER , " +
-                "CONSTRAINT fk_Card_id FOREIGN KEY (id) REFERENCES Account (Id));";
+        String createTable = "create table if not exists card (\n" +
+                "id serial primary key ,\n" +
+                "account_id INTEGER,\n" +
+                "card_number bigint,\n" +
+                "cvv2 integer,\n" +
+                "password INTEGER ,\n" +
+                "CONSTRAINT fk_account_id FOREIGN KEY (account_id) REFERENCES Account (Id));";
+
         PreparedStatement preparedStatement = connection.prepareStatement(createTable);
         preparedStatement.execute();
         preparedStatement.close();
@@ -54,9 +56,9 @@ public class CardRepository {
         PreparedStatement preparedStatement = connection.prepareStatement(exists);
         preparedStatement.setLong(1, cardNumber);
         ResultSet resultSet = preparedStatement.executeQuery();
-        preparedStatement.close();
         if (resultSet.next())
             status = true;
+        preparedStatement.close();
         return status;
     }
 
@@ -85,7 +87,7 @@ public class CardRepository {
     public Boolean checkDigitsOfCardNumber(Long cardNumber) throws SQLException {
         Boolean status = false;
         int digit = 0;
-        if (cardNumber > 0) {
+        while (cardNumber > 0) {
             cardNumber /= 10;
             digit++;
             if (digit == 16 || digit == 12)
@@ -108,26 +110,26 @@ public class CardRepository {
 
     }
 
-    public void changePassword(Card card, String password) throws SQLException {
+    public void changePassword(Card card, Integer password) throws SQLException {
         String changePassword = "update card set password = ? where card_number = ? ;\n";
         PreparedStatement preparedStatement = connection.prepareStatement(changePassword);
-        preparedStatement.setString(1, password);
+        preparedStatement.setInt(1, password);
         preparedStatement.setLong(2, card.getCardNumber());
         preparedStatement.execute();
         preparedStatement.close();
 
     }
-    public Boolean checkPassword (Card card)throws SQLException {
+
+    public Boolean checkPassword(Card card) throws SQLException {
         Boolean passwordStatus = false;
         String checkPassword = "select * from card where card_number = ? and password = ? ;";
         PreparedStatement preparedStatement = connection.prepareStatement(checkPassword);
-        preparedStatement.setLong(1,card.getCardNumber());
+        preparedStatement.setLong(1, card.getCardNumber());
         preparedStatement.setInt(2, card.getPassword());
         ResultSet resultSet = preparedStatement.executeQuery();
-        preparedStatement.close();
-        if (resultSet.next()){
+        if (resultSet.next())
             passwordStatus = true;
-        }
+        preparedStatement.close();
         return passwordStatus;
     }
 }

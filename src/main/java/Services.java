@@ -1,3 +1,4 @@
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
@@ -26,8 +27,8 @@ public class Services {
                 cardRepository.checkDigitsOfCardNumber(secondCard.cardNumber)) {//check for number of digits  16 or 12
             if (cardRepository.checkByCardNumber(firstCard.cardNumber) &&
                     cardRepository.checkByCardNumber(secondCard.cardNumber)) {  // check for if card exists
-                if (accountRepository.checkAccountStatus(firstCard.cardNumber)) {// if Account not BLOCKED !
-                    if (cardRepository.checkPassword(firstCard)) {
+                if (accountRepository.checkAccountStatus(firstCard.getCardNumber())) {// if Account not BLOCKED !
+                    if (cardRepository.checkPassword(firstCard)) { // check password
                         if (cardRepository.getAmount(firstCard.cardNumber) >= amount) {  // check for if firstCard have enough money or not
                             Integer restAmount = cardRepository.getAmount(firstCard.cardNumber) - amount - 600;
                             Integer additionalAmount = cardRepository.getAmount(secondCard.cardNumber);
@@ -38,12 +39,18 @@ public class Services {
                             System.out.println("Done! ");
                         } else System.out.println("Not enough money! ");
                     } else System.out.println("Wrong password! ");
-                } else System.out.println("there is no such a card number ");
-            } else System.out.println("Your Account is Blocked! ");
+                } else System.out.println("Your Account is Blocked! ");
+            } else System.out.println("there is no such a card number ");
         } else System.out.println("Wrong card number (digit) ");
     }
 
     public void blockAccountByNationalCode(Integer nationalCode) throws SQLException {
         accountRepository.blockAccount(accountRepository.findByNationalCode(nationalCode));
+    }
+    public TransactionList viewTransactions(Card card, Date startDate, Date endDate) throws SQLException {
+        if (cardRepository.checkPassword(card)){
+           return transactionRepository.findByCardNumber(card , startDate, endDate);
+        }
+        return null;
     }
 }

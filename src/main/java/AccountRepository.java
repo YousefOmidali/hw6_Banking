@@ -61,11 +61,11 @@ public class AccountRepository {
         PreparedStatement preparedStatement = connection.prepareStatement(findByNationalCode);
         preparedStatement.setInt(1, nationalCode);
         ResultSet resultSet = preparedStatement.executeQuery();
-        preparedStatement.close();
         Account account = null;
         if (resultSet.next()) {
             account = new Account(resultSet.getInt("amount"), resultSet.getInt("Id"), resultSet.getString("branch"));
         }
+        preparedStatement.close();
         return account;
     }
 
@@ -73,37 +73,36 @@ public class AccountRepository {
         String getAmount = "select amount from Account where Id = ? ;";
         PreparedStatement preparedStatement = connection.prepareStatement(getAmount);
         preparedStatement.setInt(1, id);
-        preparedStatement.close();
         ResultSet resultSet = preparedStatement.executeQuery();
         Integer amount = 0;
         if (resultSet.next()) {
             amount = resultSet.getInt("amount");
-        }
+        }preparedStatement.close();
         return amount;
 
     }
 
     public Boolean checkAccountStatus(Long cardNumber) throws SQLException {
         Boolean status = false;
-        String check = "select *  from Account inner join card c on Account.Id = c.id where card_number = ?;";
+        String check = "select *  from Account inner join card c on Account.Id = c.account_id where c.card_number = ?;";
         PreparedStatement preparedStatement = connection.prepareStatement(check);
         preparedStatement.setLong(1, cardNumber);
         ResultSet resultSet = preparedStatement.executeQuery();
-        preparedStatement.close();
         String statusString;
         if (resultSet.next()) {
             statusString = resultSet.getString("status");
-            if (statusString.toUpperCase().equals(AccountStatus.ALLOW)) {
+            if (statusString.toUpperCase().equals("ALLOW")) {
                 status = true;
             }
         }
+        preparedStatement.close();
         return status;
     }
 
     public void blockAccount(Account account) throws SQLException {
         String blockAccount = "update Account set status = ? where Id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(blockAccount);
-        preparedStatement.setString(1, String.valueOf(AccountStatus.BLOCKED));
+        preparedStatement.setString(1, "BLOCK");
         preparedStatement.setInt(2,account.getId());
         preparedStatement.execute();
         preparedStatement.close();

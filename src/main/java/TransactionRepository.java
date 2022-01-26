@@ -45,19 +45,23 @@ public class TransactionRepository {
         preparedStatement.close();
     }
 
-    public TransactionList findById(Integer id, Date startDate, Date endDate) throws SQLException {
-        String findById = "select  * from transaction  where id = ? And date between  ? and  ? ;";
+    public TransactionList findByCardNumber(Card card , Date startDate, Date endDate) throws SQLException {
+        String findById = "select * from transaction " +
+                "inner join account a on a.id = transaction.account_id " +
+                "inner join card c on a.id = c.account_id where" +
+                " card_number = ? and date between ? and ? ;\n";
         PreparedStatement preparedStatement = connection.prepareStatement(findById);
-        preparedStatement.setInt(1, id);
+        preparedStatement.setLong(1, card.getCardNumber());
         preparedStatement.setDate(2, startDate);
         preparedStatement.setDate(3, endDate);
         ResultSet resultSet = preparedStatement.executeQuery();
-        preparedStatement.close();
+
         TransactionList transactionList = new TransactionList();
         if (resultSet.next()) {
-            transactionList.add(new Transaction(resultSet.getInt("amount"),resultSet.getDate("date"),
+            transactionList.add(new Transaction(resultSet.getInt("amount"), resultSet.getDate("date"),
                     resultSet.getInt("account_id")));
         }
+        preparedStatement.close();
         return transactionList;
     }
 
