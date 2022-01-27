@@ -84,16 +84,17 @@ public class AccountRepository {
 
     public Boolean checkAccountStatus(Long cardNumber) throws SQLException {
         Boolean status = false;
-        String check = "select *  from Account inner join card c on Account.Id = c.account_id where c.card_number = ?;";
+        String check = "select *  from Account inner join card c on Account.Id = c.account_id" +
+                " where c.card_number = ? and account.status = 'ALLOW' ;";
         PreparedStatement preparedStatement = connection.prepareStatement(check);
         preparedStatement.setLong(1, cardNumber);
         ResultSet resultSet = preparedStatement.executeQuery();
         String statusString;
         if (resultSet.next()) {
-            statusString = resultSet.getString("status");
-            if (statusString.toUpperCase().equals("ALLOW")) {
+           // statusString = resultSet.getString("status");
+           // if (statusString.toUpperCase().equals("ALLOW")) {
                 status = true;
-            }
+           // }
         }
         preparedStatement.close();
         return status;

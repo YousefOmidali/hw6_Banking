@@ -97,35 +97,19 @@ public class Bank {
                 }
             }
             if (order == 4) {
-                java.util.Date parsed1 = null;
-                java.util.Date parsed2 = null;
                 System.out.println("enter your card number : ");
                 firstCardNumber = scanner.nextLong();
                 System.out.println("enter your national code: ");
                 nationalCode = scanner.nextInt();
-                System.out.println("enter your current password");
+                System.out.println("enter your password");
                 password = scanner.nextInt();
                 scanner.nextLine();
                 Card card = new Card(null, password, firstCardNumber);
                 System.out.println("enter your start date: yyyyMMdd ");
-                SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-                try {
-                    parsed1 = format.parse(scanner.nextLine());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                System.out.println("enter your end date: yyyyMMdd ");
-                try {
-                    parsed2 = format.parse(scanner.nextLine());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                //Date date1 = Date.valueOf("00/00/2000");
-                Date date2 = Date.valueOf(LocalDate.now());
-                java.util.Date utilDate = new java.util.Date();
-                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-
-                services.viewTransactions(card,  (Date) parsed1, (Date) parsed2);
+                Date startDate = Date.valueOf(scanner.nextLine());
+                System.out.println("enter your start date: yyyyMMdd ");
+                Date endDate = Date.valueOf(scanner.nextLine());
+                services.viewTransactions(card,startDate  ,endDate );
             }
             if (order == 5)
                 break;
@@ -141,3 +125,20 @@ public class Bank {
 
 // date1 = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(startDate);;
 // date2 = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(endDate);
+
+
+//try {
+//                    parsed1 = format.parse(scanner.nextLine());
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
+//                System.out.println("enter your end date: yyyyMMdd ");
+//                try {
+//                    parsed2 = format.parse(scanner.nextLine());
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
+//                //Date date1 = Date.valueOf("00/00/2000");
+//                Date date2 = Date.valueOf(LocalDate.now());
+//                java.util.Date utilDate = new java.util.Date();
+//                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());

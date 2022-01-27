@@ -67,11 +67,12 @@ public class CardRepository {
         PreparedStatement preparedStatement = connection.prepareStatement(getAmount);
         preparedStatement.setLong(1, cardNumber);
         ResultSet resultSet = preparedStatement.executeQuery();
-        preparedStatement.close();
+
         Integer amount = 0;
         if (resultSet.next()) {
             amount = Integer.valueOf(resultSet.getString("amount"));
         }
+        preparedStatement.close();
         return amount;
     }
 

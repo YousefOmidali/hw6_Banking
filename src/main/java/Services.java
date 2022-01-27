@@ -27,7 +27,7 @@ public class Services {
                 cardRepository.checkDigitsOfCardNumber(secondCard.cardNumber)) {//check for number of digits  16 or 12
             if (cardRepository.checkByCardNumber(firstCard.cardNumber) &&
                     cardRepository.checkByCardNumber(secondCard.cardNumber)) {  // check for if card exists
-                if (accountRepository.checkAccountStatus(firstCard.getCardNumber())) {// if Account not BLOCKED !
+                if (!accountRepository.checkAccountStatus(firstCard.getCardNumber())) {// if Account not BLOCKED !
                     if (cardRepository.checkPassword(firstCard)) { // check password
                         if (cardRepository.getAmount(firstCard.cardNumber) >= amount) {  // check for if firstCard have enough money or not
                             Integer restAmount = cardRepository.getAmount(firstCard.cardNumber) - amount - 600;
