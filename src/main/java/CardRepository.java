@@ -1,3 +1,5 @@
+import Exceptions.UnableToChangePassword;
+
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -111,14 +113,16 @@ public class CardRepository {
 
     }
 
-    public void changePassword(Card card, Integer password) throws SQLException {
+    public Boolean changePassword(Card card, Integer password) throws SQLException {
+        Boolean status = false;
         String changePassword = "update card set password = ? where card_number = ? ;\n";
         PreparedStatement preparedStatement = connection.prepareStatement(changePassword);
         preparedStatement.setInt(1, password);
         preparedStatement.setLong(2, card.getCardNumber());
-        preparedStatement.execute();
+        if (preparedStatement.execute()) {
+            status = true; }
         preparedStatement.close();
-
+        return status;
     }
 
     public Boolean checkPassword(Card card) throws SQLException {

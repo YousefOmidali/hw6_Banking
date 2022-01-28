@@ -103,7 +103,7 @@ public class AccountRepository {
     public void blockAccount(Account account) throws SQLException {
         String blockAccount = "update Account set status = ? where Id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(blockAccount);
-        preparedStatement.setString(1, "BLOCK");
+        preparedStatement.setString(1, String.valueOf(AccountStatus.BLOCKED));
         preparedStatement.setInt(2,account.getId());
         preparedStatement.execute();
         preparedStatement.close();
